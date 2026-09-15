@@ -43,9 +43,9 @@ content lives as typed data in `frontend/src/content`; deterministic rules live 
 `frontend/src/game`; the React layer renders those contracts. There is no server, account,
 telemetry, live economy, procedural campaign, or runtime dependency on canon repositories.
 
-Terraform follows the Ahara static-website convention. CI deployment is intentionally disabled
-until the project is registered in Ahara infrastructure; `scripts/deploy.sh` remains the single
-local deployment entry point once that registration exists.
+Terraform follows the Ahara static-website convention. CI runs the complete verification suite
+without AWS credentials. Deployment remains intentionally disabled until the project is registered
+in Ahara infrastructure; `scripts/deploy.sh` is the single deployment entry point after that.
 
 ## License
 

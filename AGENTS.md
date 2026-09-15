@@ -52,6 +52,7 @@ durable architectural decision changes.
 
 ## Git and deployment
 
-Use imperative commit messages and keep commits focused. Never commit secrets. The shared Ahara
-workflow currently runs CI with deployment disabled. Do not enable deployment until Homeomorph
-has an intentional Ahara infrastructure registration and the hostname is confirmed.
+Use imperative commit messages and keep commits focused. Never commit secrets. The CI workflow is
+verification-only because Ahara's shared deployment workflow requires AWS secrets even when its
+deployment input is disabled. Do not adopt that workflow or enable deployment until Homeomorph has
+an intentional Ahara infrastructure registration and the hostname is confirmed.

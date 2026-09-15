@@ -43,6 +43,7 @@ with global variables and resets in `styles.css`.
 
 ## Deployment
 
-Vite produces static assets. Terraform provisions the Ahara website module. The shared CI workflow
-runs checks with deployment disabled until infrastructure registration is complete; the parameterless
-deployment script is the intentional manual entry point after that.
+Vite produces static assets. Terraform provisions the Ahara website module. CI reproduces the Ahara
+TypeScript and Terraform checks without requesting AWS credentials. The shared deployment workflow
+cannot be used before infrastructure registration because it requires those secrets even when deploy
+is disabled; the parameterless deployment script is the intentional entry point after registration.
