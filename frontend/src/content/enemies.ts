@@ -1,0 +1,68 @@
+import type { EnemyDefinition } from "./types";
+
+export const enemies = [
+  {
+    id: "retrieval-officer",
+    name: "Retrieval officer",
+    kind: "human",
+    purpose: "Baseline movement and restraint.",
+    intent: "Move, mark, then fire.",
+    counterplay: "Use cover, break line of sight, or clear the mark.",
+  },
+  {
+    id: "brace-carrier",
+    name: "Brace carrier",
+    kind: "human",
+    purpose: "Mobile protection for a team.",
+    intent: "Project a directional shield.",
+    counterplay: "Flank, displace, or disable the projector.",
+  },
+  {
+    id: "lock-engineer",
+    name: "Lock engineer",
+    kind: "human",
+    purpose: "Alters routes and operates stabilizers.",
+    intent: "Place a brace or channel a lock.",
+    counterplay: "Interrupt, interact with the device, or force movement.",
+  },
+  {
+    id: "surveyor",
+    name: "Surveyor",
+    kind: "human",
+    purpose: "Long-range information pressure.",
+    intent: "Paint a firing lane one round early.",
+    counterplay: "Leave the lane, raise cover, or obscure the sensor.",
+  },
+  {
+    id: "restraint-drone",
+    name: "Restraint drone",
+    kind: "drone",
+    purpose: "Fast suppression and pursuit.",
+    intent: "Tether a visible target.",
+    counterplay: "Break the tether by distance or deal one damage.",
+  },
+  {
+    id: "linebreaker-rig",
+    name: "Linebreaker rig",
+    kind: "rig",
+    purpose: "Slow, heavy objective pressure.",
+    intent: "Charge a tile or breach an anchor.",
+    counterplay: "Redirect, immobilize, or attack its exposed rear module.",
+  },
+  {
+    id: "field-coordinator",
+    name: "Field coordinator",
+    kind: "human",
+    purpose: "Elite support and reinforcement control.",
+    intent: "Grant a second declared intent to one ally.",
+    counterplay: "Jam command or separate the formation.",
+  },
+  {
+    id: "departure-auxiliary",
+    name: "Departure auxiliary",
+    kind: "human",
+    purpose: "Local guidance for the expedition.",
+    intent: "Reveal a shortcut and flank.",
+    counterplay: "Close the route or persuade them when isolated.",
+  },
+] as const satisfies readonly EnemyDefinition[];

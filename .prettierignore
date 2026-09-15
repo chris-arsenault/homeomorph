@@ -1,0 +1,5 @@
+frontend/dist
+frontend/coverage
+frontend/pnpm-lock.yaml
+infrastructure/terraform/.terraform
+

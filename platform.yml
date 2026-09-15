@@ -1,0 +1,6 @@
+project: homeomorph
+prefix: homeomorph
+stack:
+  - typescript
+  - terraform
+typescript_dir: frontend
