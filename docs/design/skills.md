@@ -1,5 +1,15 @@
 # Skills and Progression
 
+The playable kit keeps the characters and branch identities below. Exact current costs and effects
+come from `frontend/src/content/abilities.ts`, which supplies both deployment descriptions and
+action controls. The gray-box adaptations are explicit: Clear Order moves an adjacent ally toward
+the next objective; Known Way opens an internal passage for the mission; Open Corridor jams nearby
+enemies; Good Brace grants Guard when building; Neighborhood Grid lays a straight cover line;
+Return Order persuades a coordinator to stand down; Full Record copies a visible enemy weapon.
+Read Threshold grants one movement range while all shifts remain public information. Movement
+grants are bounded by AP or once-per-activation limits; Second Plan alone grants another activation.
+These decisions make the complete kit executable without adding a second action economy.
+
 Progression expands decisions without creating build traps. Each protagonist has a fixed core kit
 and two thematic branches with three tiers. After missions 2, 5, and 7, the player selects one of
 the two skills at the new tier for every protagonist. Earlier choices do not lock a branch, so each

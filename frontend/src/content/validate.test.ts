@@ -5,6 +5,7 @@ import { enemies } from "./enemies";
 import { skillChoices } from "./skills";
 import type { GameContent } from "./validate";
 import { validateContent } from "./validate";
+import { validateCampaign } from "./validateEncounters";
 
 const content: GameContent = {
   missions: campaign,
@@ -14,6 +15,12 @@ const content: GameContent = {
 };
 
 describe("validateContent", () => {
+  it("validates playable maps and rejects deleted campaign content", () => {
+    expect(validateCampaign()).toEqual([]);
+    expect(validateContent({ ...content, missions: campaign.slice(0, 8) })).toContain(
+      "Campaign requires nine missions and an epilogue."
+    );
+  });
   it("accepts the authored Homeomorph foundation", () => {
     expect(validateContent(content)).toEqual([]);
   });

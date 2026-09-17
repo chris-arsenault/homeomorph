@@ -1,0 +1,185 @@
+.tactical-game {
+  max-width: 1440px;
+  margin: auto;
+  padding: 1.5rem;
+}
+.mission-header,
+.battle-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.25rem;
+}
+.mission-header h1 {
+  margin-bottom: 0;
+}
+.round-badge {
+  border: 1px solid var(--line);
+  padding: 0.8rem 1.2rem;
+  border-radius: 8px;
+  font-family: monospace;
+  font-size: 1.1rem;
+}
+.battle-toolbar span,
+.board-help {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+.tactical-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 310px;
+  gap: 1.25rem;
+  align-items: start;
+}
+.board-column,
+.mission-sidebar {
+  display: grid;
+  gap: 1rem;
+  min-width: 0;
+}
+.panel {
+  padding: 1.25rem;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+.panel h2 {
+  font-size: 1.1rem;
+}
+.panel p {
+  color: var(--muted);
+  line-height: 1.6;
+}
+.crew-list {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.5rem;
+}
+.crew-list button {
+  text-align: left;
+}
+.crew-list span {
+  display: block;
+  font-size: 0.8rem;
+  margin-top: 0.3rem;
+}
+.action-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-block: 1rem;
+}
+.action-options small {
+  color: var(--muted);
+  margin-left: 0.4rem;
+}
+.action-panel > button {
+  margin-right: 0.6rem;
+  margin-bottom: 1rem;
+}
+.preview {
+  padding: 0.8rem 1rem;
+  border-left: 3px solid var(--line);
+  margin-bottom: 1rem;
+  background: var(--deep);
+}
+.preview.legal {
+  border-color: var(--nacre);
+}
+.preview.blocked {
+  border-color: var(--rescue);
+}
+.preview p {
+  margin: 0.4rem 0 0;
+}
+.inspection {
+  border-top: 1px solid var(--line);
+  padding-top: 1rem;
+}
+.inspection h3 {
+  font-size: 0.9rem;
+}
+.objectives {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: 1rem;
+}
+.objectives li {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.3rem 1rem;
+  font-size: 0.9rem;
+}
+.objectives small {
+  grid-column: 1 / -1;
+  color: var(--muted);
+}
+.objectives .done {
+  color: var(--nacre);
+}
+.shift-notice {
+  border-left: 3px solid var(--turn);
+}
+.intent-panel {
+  border-left: 3px solid var(--rescue);
+}
+.intent-panel ol {
+  padding-left: 1.25rem;
+}
+.intent-panel li {
+  padding: 0.5rem;
+  font-size: 0.9rem;
+}
+.intent-panel .next-intent {
+  background: var(--deep);
+}
+.intent-panel li p {
+  margin: 0.4rem 0;
+}
+.status-message {
+  min-height: 1.5rem;
+  margin: 0;
+  color: var(--nacre);
+}
+.outcome,
+.confirmation {
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+  border: 1px solid var(--focus);
+  background: var(--panel);
+  border-radius: 8px;
+}
+.confirmation button {
+  margin-right: 0.7rem;
+}
+.action-log {
+  color: var(--muted);
+  line-height: 1.7;
+  max-height: 18rem;
+  overflow: auto;
+}
+.pressure {
+  color: var(--rescue) !important;
+}
+@media (max-width: 1000px) {
+  .tactical-layout {
+    grid-template-columns: 1fr;
+  }
+  .mission-sidebar {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 600px) {
+  .tactical-game {
+    padding: 0.75rem;
+  }
+  .mission-sidebar {
+    grid-template-columns: 1fr;
+  }
+  .crew-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

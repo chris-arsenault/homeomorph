@@ -1,179 +1,203 @@
 import { useState } from "react";
-import { campaign } from "./content/campaign";
-import { characters } from "./content/characters";
-import { enemies } from "./content/enemies";
-import { skillChoices } from "./content/skills";
-import type { CampaignAct } from "./content/types";
+import { Briefing, Debrief, Ending, Welcome } from "./components/CampaignFlow";
+import { TacticalGame } from "./components/TacticalGame";
+import { useCampaign } from "./components/useCampaign";
+import { newSession } from "./game/campaign";
+import type { Difficulty, Session } from "./game/types";
+import { exportSession } from "./storage/saves";
+import { parseSession } from "./storage/validate";
 import "./App.css";
 
-const acts: readonly CampaignAct[] = ["I", "II", "III", "Epilogue"];
-
-function ActPanel({ act }: Readonly<{ act: CampaignAct }>) {
-  const missions = campaign.filter((mission) => mission.act === act);
-
+function Screen({
+  session,
+  onChange,
+}: Readonly<{ session: Session; onChange: (session: Session) => void }>) {
+  if (session.stage === "briefing") return <Briefing session={session} onChange={onChange} />;
+  if (session.stage === "debrief") return <Debrief session={session} onChange={onChange} />;
+  if (session.stage === "ending") return <Ending session={session} />;
+  if (session.battle)
+    return (
+      <TacticalGame
+        key={session.mission}
+        session={session}
+        battle={session.battle}
+        onChange={onChange}
+      />
+    );
   return (
-    <section className="act-panel" aria-labelledby={`act-${act}`}>
-      <p className="eyebrow">{act === "Epilogue" ? act : `Act ${act}`}</p>
-      <h3 id={`act-${act}`}>{missions.map((mission) => mission.title).join(" · ")}</h3>
-      <ol>
-        {missions.map((mission) => (
-          <li key={mission.id}>
-            <span>{mission.sequence}</span>
-            <div>
-              <strong>{mission.title}</strong>
-              <p>{mission.objective}</p>
-            </div>
-          </li>
-        ))}
-      </ol>
-    </section>
+    <p role="alert">
+      This mission snapshot is unavailable. Import a backup or start a new campaign.
+    </p>
   );
 }
 
-function RosterPanel() {
-  return (
-    <section className="reference-section" aria-labelledby="roster-title">
-      <header>
-        <p className="eyebrow">Five people · four deploy</p>
-        <h2 id="roster-title">Turnward Crew Seven</h2>
-      </header>
-      <div className="card-grid">
-        {characters.map((character) => (
-          <article className="person-card" key={character.id}>
-            <p className="role">{character.role}</p>
-            <h3>{character.name}</h3>
-            <p>{character.combatIdentity}</p>
-            <small>{character.arc}</small>
-          </article>
-        ))}
-      </div>
-    </section>
-  );
+interface ToolProps {
+  session: Session | null;
+  loading: boolean;
+  onImport: (file: File | undefined) => Promise<void>;
+  onNew: () => void;
 }
 
-function OppositionPanel() {
+function CampaignTools({ session, loading, onImport, onNew }: ToolProps) {
   return (
-    <section className="reference-section opposition" aria-labelledby="opposition-title">
-      <header>
-        <p className="eyebrow">One expedition · eight readable roles</p>
-        <h2 id="opposition-title">The Safekeeping</h2>
-      </header>
-      <div className="enemy-list">
-        {enemies.map((enemy) => (
-          <article key={enemy.id}>
-            <h3>{enemy.name}</h3>
-            <p>{enemy.counterplay}</p>
-          </article>
-        ))}
-      </div>
-    </section>
-  );
-}
-
-function Hero() {
-  return (
-    <header className="hero">
-      <nav aria-label="Design reference">
-        <span>HOMEOMORPH</span>
-        <a href="https://github.com/chris-arsenault/homeomorph">Repository</a>
+    <header className="app-bar">
+      <span className="wordmark">HOMEOMORPH</span>
+      <nav aria-label="Campaign tools">
+        {session && (
+          <button type="button" onClick={() => exportSession(session)}>
+            Export save
+          </button>
+        )}
+        <label className="import-save">
+          Import save
+          <input
+            type="file"
+            accept="application/json,.json"
+            aria-label="Import save"
+            disabled={loading}
+            onChange={(event) => {
+              void onImport(event.target.files?.[0]);
+              event.target.value = "";
+            }}
+          />
+        </label>
+        {session && (
+          <button type="button" onClick={onNew}>
+            New campaign
+          </button>
+        )}
+        <label className="text-size">
+          Text size
+          <select
+            defaultValue="normal"
+            aria-label="Text size"
+            onChange={(event) => {
+              document.documentElement.dataset.textSize = event.target.value;
+            }}
+          >
+            <option value="normal">Normal</option>
+            <option value="large">Large</option>
+          </select>
+        </label>
       </nav>
-      <div className="hero-copy">
-        <p className="eyebrow">A Glass Frontier story · Design foundation</p>
-        <h1>A home can change shape without becoming less itself.</h1>
-        <p className="lede">
-          During Nacre&apos;s Long Turn, a rescue society mistakes transformation for collapse and
-          makes survival compulsory. Five local workers fight for the time to choose.
-        </p>
-        <dl>
-          <div>
-            <dt>Format</dt>
-            <dd>Deterministic tactical RPG</dd>
-          </div>
-          <div>
-            <dt>Campaign</dt>
-            <dd>9 missions + epilogue</dd>
-          </div>
-          <div>
-            <dt>Target</dt>
-            <dd>6–8 hours</dd>
-          </div>
-        </dl>
-      </div>
     </header>
   );
 }
 
-function CampaignPanel() {
+function Confirmation({
+  title,
+  description,
+  confirmLabel,
+  cancelLabel,
+  onConfirm,
+  onCancel,
+}: Readonly<{
+  title: string;
+  description: string;
+  confirmLabel: string;
+  cancelLabel: string;
+  onConfirm: () => void;
+  onCancel: () => void;
+}>) {
   return (
-    <section className="campaign" aria-labelledby="campaign-title">
-      <header>
-        <p className="eyebrow">A complete dramatic spine</p>
-        <h2 id="campaign-title">Contact, custody, the Turn, and what remains</h2>
-      </header>
-      <div className="acts">
-        {acts.map((act) => (
-          <ActPanel act={act} key={act} />
-        ))}
-      </div>
+    <section className="confirmation app-confirm" role="alertdialog" aria-label={title}>
+      <h2>{title}</h2>
+      <p>{description}</p>
+      <button type="button" onClick={onConfirm}>
+        {confirmLabel}
+      </button>
+      <button type="button" onClick={onCancel}>
+        {cancelLabel}
+      </button>
     </section>
   );
 }
 
-function CombatContract() {
-  return (
-    <section className="combat-contract" aria-labelledby="combat-title">
-      <div>
-        <p className="eyebrow">Combat contract</p>
-        <h2 id="combat-title">No hidden arithmetic.</h2>
-      </div>
-      <ul>
-        <li>Two action points per activation</li>
-        <li>Exact outcomes before commitment</li>
-        <li>Enemy intent shown before resolution</li>
-        <li>Habitat shifts previewed one round ahead</li>
-        <li>Objectives beyond defeating everyone</li>
-        <li>Incapacitation is the default defeat state</li>
-      </ul>
-      <p className="skill-count">
-        {skillChoices.length} authored skill choices across five bounded trees.
-      </p>
-    </section>
-  );
+function EntryScreen({
+  loading,
+  session,
+  onChange,
+}: Readonly<{ loading: boolean; session: Session | null; onChange: (session: Session) => void }>) {
+  function start(difficulty: Difficulty) {
+    onChange(newSession(difficulty));
+  }
+  if (loading)
+    return (
+      <main className="loading" role="status">
+        Reading local progress…
+      </main>
+    );
+  if (session) return <Screen session={session} onChange={onChange} />;
+  return <Welcome onStart={start} />;
 }
 
 function App() {
-  const [showOpposition, setShowOpposition] = useState(false);
-
+  const { session, setSession, loading, storageMessage, setStorageMessage } = useCampaign();
+  const [confirmNew, setConfirmNew] = useState(false);
+  const [pendingImport, setPendingImport] = useState<Session | null>(null);
+  async function importFile(file: File | undefined) {
+    if (!file) return;
+    try {
+      if (file.size > 2_000_000) throw new Error("This file is too large to be a Homeomorph save.");
+      setPendingImport(parseSession(await file.text()));
+    } catch (error) {
+      setStorageMessage(error instanceof Error ? error.message : "Could not import the save.");
+    }
+  }
+  function confirmImport() {
+    if (pendingImport) setSession(pendingImport);
+    setPendingImport(null);
+  }
+  function startNew() {
+    setSession(newSession());
+    setConfirmNew(false);
+  }
+  function openNew() {
+    setConfirmNew(true);
+  }
+  function cancelNew() {
+    setConfirmNew(false);
+  }
+  function cancelImport() {
+    setPendingImport(null);
+  }
   return (
-    <main>
-      <Hero />
-
-      <section className="promise" aria-labelledby="promise-title">
-        <p className="eyebrow">The production promise</p>
-        <h2 id="promise-title">Familiar tactics. One strange place, understood deeply.</h2>
-        <p>
-          Two actions. Exact damage. Visible enemy intentions. Authored maps that change at known
-          moments. The novelty lives in Nacre and its people—not in rules that need endless tuning.
-        </p>
-      </section>
-
-      <CampaignPanel />
-
-      <RosterPanel />
-      <CombatContract />
-
-      <div className="opposition-toggle">
-        <button type="button" onClick={() => setShowOpposition((visible) => !visible)}>
-          {showOpposition ? "Hide enemy reference" : "Show enemy reference"}
-        </button>
-      </div>
-      {showOpposition && <OppositionPanel />}
-
-      <footer>
-        <p>Design is the source of truth. The build is its typed reference surface.</p>
-        <p>MIT · 2026</p>
+    <>
+      <CampaignTools session={session} loading={loading} onImport={importFile} onNew={openNew} />
+      <p className="save-status" role="status">
+        {storageMessage}
+      </p>
+      {confirmNew && (
+        <Confirmation
+          title="Replace this campaign?"
+          description="Export a save first if you want to keep it. The new campaign replaces local progress."
+          confirmLabel="Start new campaign"
+          cancelLabel="Keep current campaign"
+          onConfirm={startNew}
+          onCancel={cancelNew}
+        />
+      )}
+      {pendingImport && (
+        <Confirmation
+          title="Import this campaign?"
+          description={
+            "Sequence " +
+            (pendingImport.mission + 1) +
+            " · " +
+            pendingImport.completed.length +
+            " complete. This replaces current local progress."
+          }
+          confirmLabel="Use imported save"
+          cancelLabel="Cancel import"
+          onConfirm={confirmImport}
+          onCancel={cancelImport}
+        />
+      )}
+      <EntryScreen loading={loading} session={session} onChange={setSession} />
+      <footer className="app-footer">
+        Local campaign · Deterministic tactics · Gray-box build
       </footer>
-    </main>
+    </>
   );
 }
 

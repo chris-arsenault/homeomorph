@@ -18,8 +18,10 @@ authored maps ────────┘       │
 
 ## State
 
-Campaign state will contain a schema version, completed mission, skill choices, story flags, and
-current mission snapshot. Save data uses JSON in IndexedDB with a localStorage fallback. Migration
+Campaign state contains a schema version, completed missions, deployment, skill choices, story flags,
+difficulty, current mission snapshot, and activation checkpoint. Save data uses JSON in IndexedDB
+with a localStorage fallback. Available stores receive timestamped copies; load selects the newest.
+The `storage` boundary validates imported and persisted data before passing it to the game. Migration
 functions are required before a released schema changes. Content definitions and transient UI state
 do not enter saves.
 
@@ -32,13 +34,14 @@ uses cosmetic randomness, it must not affect state and receives a separate seede
 ## Content
 
 Characters, skills, enemy roles, and missions are exported as typed readonly arrays. Validation runs
-in tests and development startup. Maps will use versioned JSON validated at build time. Prefer direct
+in tests and Vite startup. Maps use versioned JSON validated at build time. Prefer direct
 references by stable ID over inheritance or an entity-component framework.
 
 ## Presentation
 
-React owns menus, panels, focus, and input translation. The tactical board should use Canvas for the
-map and units, with DOM overlays for text, controls, and accessibility. CSS remains component-local,
+React owns menus, panels, focus, and input translation. Canvas renders terrain behind a DOM tile grid
+containing unit labels and accessible controls. Previews run the same pure transition as execution;
+the UI never calculates damage or action legality. CSS remains component-local,
 with global variables and resets in `styles.css`.
 
 ## Deployment

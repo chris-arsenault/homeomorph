@@ -1,0 +1,166 @@
+.campaign-flow {
+  max-width: 1200px;
+  margin: auto;
+  padding: clamp(1.5rem, 5vw, 4rem);
+}
+.campaign-flow > h1 {
+  font-family: Georgia, serif;
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 400;
+  max-width: 16ch;
+  line-height: 1.05;
+}
+.briefing-text {
+  font-size: 1.15rem;
+  line-height: 1.8;
+  max-width: 70ch;
+}
+.mission-facts {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  margin-block: 2rem;
+  padding-block: 1.5rem;
+  border-block: 1px solid var(--line);
+}
+.mission-facts h2 {
+  font-size: 1rem;
+  color: var(--nacre);
+}
+.campaign-flow p {
+  line-height: 1.7;
+  color: var(--muted);
+}
+.deployment-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin-block: 1.5rem;
+}
+.deployment-card {
+  padding: 1rem;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--panel);
+}
+.deployment-card.selected {
+  border-top: 3px solid var(--nacre);
+}
+.deployment-card h3 {
+  margin-bottom: 0.5rem;
+}
+.deployment-card p {
+  font-size: 0.85rem;
+}
+.deployment-card .eyebrow {
+  font-size: 0.65rem;
+  min-height: 2rem;
+}
+.deployment-card > p:not(.eyebrow) {
+  min-height: 5rem;
+}
+.deployment-card button {
+  width: 100%;
+  font-size: 0.85rem;
+}
+.skill-selection {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+.skill-selection label,
+.custom-settings label {
+  display: grid;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+}
+.skill-selection small {
+  color: var(--muted);
+  line-height: 1.5;
+}
+.difficulty-picker {
+  padding: 1.2rem;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  margin-block: 2rem;
+}
+.difficulty-picker legend {
+  padding-inline: 0.5rem;
+}
+.difficulty-options {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+.custom-settings {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+  padding-top: 1rem;
+}
+.deploy-button {
+  font-size: 1.1rem;
+}
+.campaign-roadmap {
+  margin-top: 2rem;
+}
+.campaign-roadmap ol {
+  line-height: 2;
+}
+.story-choices {
+  display: grid;
+  gap: 1rem;
+  max-width: 700px;
+}
+.story-choices button {
+  text-align: left;
+  padding: 1.5rem;
+}
+.story-choices strong,
+.story-choices span {
+  display: block;
+}
+.story-choices span {
+  margin-top: 0.6rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+.ending-accounts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin-block: 2rem;
+}
+.ending-accounts article {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 1.5rem;
+  background: var(--panel);
+}
+.closing-line,
+.unlock-notice {
+  border-left: 3px solid var(--nacre);
+  padding: 1rem;
+}
+.welcome {
+  max-width: 900px;
+  padding-top: 5rem;
+}
+.welcome-rules {
+  margin-block: 2rem;
+}
+@media (max-width: 1100px) {
+  .deployment-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+@media (max-width: 650px) {
+  .deployment-grid,
+  .ending-accounts,
+  .mission-facts {
+    grid-template-columns: 1fr;
+  }
+  .deployment-card > p:not(.eyebrow) {
+    min-height: 0;
+  }
+}

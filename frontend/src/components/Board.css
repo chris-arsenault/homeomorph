@@ -1,0 +1,96 @@
+.board-scroll {
+  overflow: auto;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+.board-surface {
+  position: relative;
+  min-width: 528px;
+  aspect-ratio: 12 / 9;
+}
+.board-surface canvas {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  inset: 0;
+}
+.board-grid {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: repeat(9, 1fr);
+}
+.board-cell {
+  position: relative;
+  padding: 0;
+  min-width: 44px;
+  min-height: 44px;
+  background: transparent;
+  border: 2px solid transparent;
+  border-radius: 0;
+  color: var(--ink);
+}
+.board-cell:hover {
+  background: rgb(255 255 255 / 10%);
+}
+.board-cell.reachable {
+  background: rgb(129 221 213 / 12%);
+  border-color: rgb(129 221 213 / 28%);
+}
+.board-cell.target {
+  border-color: var(--focus);
+  background: rgb(247 217 120 / 15%);
+}
+.board-cell:focus-visible {
+  outline-offset: -4px;
+  z-index: 2;
+}
+.cell-coordinate {
+  position: absolute;
+  top: 2px;
+  left: 3px;
+  font-size: 0.55rem;
+  color: #b0bcc0;
+}
+.unit-token {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48%;
+  aspect-ratio: 1;
+  margin-top: 3px;
+  border: 2px solid currentColor;
+  border-radius: 50%;
+  font-size: clamp(0.65rem, 1.3vw, 1rem);
+  background: #172329;
+}
+.unit-token.crew {
+  color: var(--nacre);
+}
+.unit-token.enemy {
+  color: var(--rescue);
+  border-radius: 3px;
+}
+.unit-token.fallen {
+  opacity: 0.45;
+  border-style: dashed;
+}
+.unit-health {
+  display: block;
+  font-size: 0.58rem;
+  line-height: 1.2;
+}
+.objective-token {
+  position: absolute;
+  bottom: 1px;
+  right: 3px;
+  color: var(--focus);
+  font-size: 1rem;
+}
+.objective-token.complete {
+  color: var(--nacre);
+}
+.shift-cell {
+  border-bottom-color: var(--turn);
+}

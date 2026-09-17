@@ -1,4 +1,5 @@
 export type CampaignAct = "I" | "II" | "III" | "Epilogue";
+export type Point = Readonly<{ x: number; y: number }>;
 
 export interface MissionDefinition {
   readonly id: string;

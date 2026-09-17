@@ -80,8 +80,19 @@ export function validateContent(content: GameContent): string[] {
   );
 
   return [
+    ...validateBudget(content),
     ...duplicateErrors,
     ...validateSequences(content.missions),
     ...validateSkills(content.characters, content.skills),
   ];
+}
+
+function validateBudget(content: GameContent): string[] {
+  const errors: string[] = [];
+  if (content.missions.length !== 10)
+    errors.push("Campaign requires nine missions and an epilogue.");
+  if (content.characters.length !== 5) errors.push("The roster requires five protagonists.");
+  if (content.enemies.length !== 8) errors.push("The opposition requires eight enemy roles.");
+  if (content.skills.length !== 30) errors.push("Progression requires thirty skill choices.");
+  return errors;
 }

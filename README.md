@@ -6,10 +6,11 @@ mistakes a difficult way of life for an extinction event, and places the populat
 emergency custody. A five-person local crew must resist without turning sincere rescuers
 into monsters—or denying the real failures their own leaders concealed.
 
-This repository is deliberately design-first. It contains the campaign, cast, enemy force,
-combat contract, progression, difficulty model, production limits, and canon boundary needed
-to make the game without inventing its foundations during implementation. The browser build is
-a small, typed reference surface rather than a vertical slice.
+The browser build is a playable gray-box campaign: nine missions and a playable epilogue across
+six authored maps. It includes four-person deployment, five protagonists, thirty skill choices,
+deterministic combat, declared enemy actions, scheduled route changes, story assistance, and local
+save/resume. Art and music are not included. Encounter pacing and difficulty still need human
+playtesting; the build does not yet establish the intended six-to-eight-hour duration.
 
 ## Start here
 
@@ -35,6 +36,23 @@ pnpm dev
 
 From the repository root, `make ci` runs linting, formatting checks, type checking, unit tests,
 the production build, and Terraform formatting. Individual targets are also available.
+
+## Playing
+
+Choose a difficulty and deploy four crew members. Select a ready person, choose an action, inspect
+a board tile, and confirm the preview. Each activation has two AP. End the activation to resolve
+the next declared enemy action; remaining enemies act after the final crew member.
+
+Arrow keys move focus around the board. Tab reaches the action controls. Touch and mouse use the
+same inspect-and-confirm flow. The header offers larger text, save export, and save import.
+
+Objectives win missions. Incapacitated enemies can be bypassed, and isolated injured people can
+surrender. The prologue and epilogue have no enemies or deadline. Rewinds restore the start of the
+last activation, including enemy consequences. Restarting a mission preserves earlier choices.
+
+Progress saves after each change, using IndexedDB and a localStorage fallback. Export a JSON backup
+before clearing browser data or changing devices. Imports validate the complete snapshot before
+offering to replace progress. No accounts, telemetry, or cloud saves are used.
 
 ## Architecture
 

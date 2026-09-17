@@ -84,3 +84,31 @@ mission-specific round deadline expires. Restarting a mission has no campaign pe
 No hit percentages, initiative stat, inventory grid, consumable economy, loot rarity, elemental
 matrix, destructible-everything simulation, reaction-fire web, height levels, fog of war, friendly
 fire, or permanent death. Each would add tuning surfaces without strengthening this story.
+
+## Playable rules
+
+The gray-box campaign resolves the tactical grammar as follows:
+
+- Each ready hero activates once per round, alternating with enemies in displayed order. After
+  the final hero, remaining enemies act before the next round begins. Ending early discards AP.
+- Walls block orthogonal movement and line of sight. Standing units block movement; fallen and
+  surrendered units remain visible but can be crossed. Cover tiles reduce incoming damage by one.
+  A brace carrier also gives that protection to adjacent allies. Guard never stacks.
+- Enemy paths and targets are fixed when declared. Invalid plans become Guard without a replacement
+  attack. Distant enemies can declare movement followed by Guard. Surveyors aim at a fixed tile;
+  leaving that tile invalidates their shot. The displayed queue projects conditions in enemy order.
+- Retrieval strikes apply Marked when they deal damage. Drone strikes apply Restrained and record
+  the drone as their source. Assist, damage to that drone, disabling it, or moving beyond three
+  tiles clears the tether. All crew members can Assist an adjacent standing ally for one vitality.
+- Sela can invite an isolated human at two vitality or less to surrender within three visible tiles.
+  Isolation means no standing ally within two tiles. Terms Spoken raises the threshold to three.
+- Lock engineers in the late missions channel one pressure per activation. Eight pressure fails
+  the mission. Objective interactions remove one pressure. Required objectives win the mission;
+  optional opportunities expire separately. The Assembly also requires surviving through round four.
+- Closing thresholds move occupants to the first open adjacent tile in north/east/south/west order.
+  A Braced occupant or lack of safe space keeps that threshold open. The alternate route still opens.
+- Rewind restores the whole activation-start snapshot, including ensuing enemy actions. Its budget
+  remains outside that snapshot. The peaceful prologue and epilogue have no failure deadline.
+
+All costs, ranges, status changes, and skill adaptations are shown in the playable action panel.
+The current maps are compact encounters for testing these rules; final campaign pacing is unmeasured.

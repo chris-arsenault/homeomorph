@@ -32,5 +32,5 @@ From the repository root, run `make ci`. During focused frontend work, run `pnpm
 ## Architecture
 
 Vite builds a React 19 and strict TypeScript application. Content is data, rules are pure
-functions, and the UI is a replaceable consumer. No backend or persistence is required for the
-campaign. See `docs/architecture.md` and the ADRs for durable decisions.
+functions, and the UI is a replaceable consumer. Browser persistence stores validated campaign and
+activation snapshots; no backend is required. See `docs/architecture.md` for durable decisions.

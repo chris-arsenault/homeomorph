@@ -46,8 +46,7 @@ export function previewStrike(
     return { legal: false, reason: "outside-range" };
   }
 
-  const reduction = defender.armor + cover + defender.guard;
-  const damage = Math.max(0, weapon.power - reduction);
+  const damage = damageAfterProtection(weapon.power, defender.armor, cover, defender.guard);
   const remainingVitality = Math.max(0, defender.vitality - damage);
 
   return {
@@ -57,4 +56,13 @@ export function previewStrike(
     consumesGuard: defender.guard > 0 && damage > 0,
     incapacitates: remainingVitality === 0,
   };
+}
+
+export function damageAfterProtection(
+  power: number,
+  armor: number,
+  cover: number,
+  guard: number
+): number {
+  return Math.max(0, power - armor - cover - guard);
 }
